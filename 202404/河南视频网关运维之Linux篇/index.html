@@ -7,10 +7,12 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="../../../img/fluid.png">
-  <link rel="icon" href="../../../img/fluid.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="../../assets/fluid/favicon.png">
+  <link rel="icon" href="../../assets/fluid/favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   
   <meta name="theme-color" content="#2f4154">
   <meta name="author" content="tttrove">
@@ -19,17 +21,17 @@
     <meta name="description" content="整理在河南网关运维工作中遇到的问题与解决方法，仅作为记录">
 <meta property="og:type" content="article">
 <meta property="og:title" content="河南视频网关运维之Linux篇">
-<meta property="og:url" content="https://tttrove.top/blog/202404/%E6%B2%B3%E5%8D%97%E8%A7%86%E9%A2%91%E7%BD%91%E5%85%B3%E8%BF%90%E7%BB%B4%E4%B9%8BLinux%E7%AF%87/index.html">
+<meta property="og:url" content="https://tttrove.top/202404/%E6%B2%B3%E5%8D%97%E8%A7%86%E9%A2%91%E7%BD%91%E5%85%B3%E8%BF%90%E7%BB%B4%E4%B9%8BLinux%E7%AF%87/index.html">
 <meta property="og:site_name" content="tttrove的博客">
 <meta property="og:description" content="整理在河南网关运维工作中遇到的问题与解决方法，仅作为记录">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://images.tttrove.top/file/5dec5d2e13ad57f41d49d.png">
+<meta property="og:image" content="https://tttrove.top/assets/index_img/linux.jpg">
 <meta property="article:published_time" content="2024-04-30T09:43:37.000Z">
-<meta property="article:modified_time" content="2024-05-11T01:09:27.884Z">
+<meta property="article:modified_time" content="2024-05-13T09:37:19.107Z">
 <meta property="article:author" content="tttrove">
 <meta property="article:tag" content="运维">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://images.tttrove.top/file/5dec5d2e13ad57f41d49d.png">
+<meta name="twitter:image" content="https://tttrove.top/assets/index_img/linux.jpg">
   
   
   
@@ -57,12 +59,12 @@
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
 
 
-<link  rel="stylesheet" href="../../../css/main.css" />
+<link  rel="stylesheet" href="../../css/main.css" />
 
 
-  <link id="highlight-css" rel="stylesheet" href="../../../css/highlight.css" />
+  <link id="highlight-css" rel="stylesheet" href="../../css/highlight.css" />
   
-    <link id="highlight-css-dark" rel="stylesheet" href="../../../css/highlight-dark.css" />
+    <link id="highlight-css-dark" rel="stylesheet" href="../../css/highlight-dark.css" />
   
 
 
@@ -71,15 +73,15 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"tttrove.top","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"tttrove.top","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/assets/fluid/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
       Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
     }
   </script>
-  <script  src="../../../js/utils.js" ></script>
-  <script  src="../../../js/color-schema.js" ></script>
+  <script  src="../../js/utils.js" ></script>
+  <script  src="../../js/color-schema.js" ></script>
   
 
 
@@ -96,8 +98,8 @@
 <div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand" href="../../../index.html">
-      <strong>Fluid</strong>
+    <a class="navbar-brand" href="../../index.html">
+      <strong>tttrove的博客</strong>
     </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
@@ -115,7 +117,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="../../../index.html" target="_self">
+              <a class="nav-link" href="../../index.html" target="_self">
                 <i class="iconfont icon-home-fill"></i>
                 <span>首页</span>
               </a>
@@ -127,7 +129,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="../../../archives/" target="_self">
+              <a class="nav-link" href="../../archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>归档</span>
               </a>
@@ -139,7 +141,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="../../../categories/" target="_self">
+              <a class="nav-link" href="../../categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
                 <span>分类</span>
               </a>
@@ -151,7 +153,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="../../../tags/" target="_self">
+              <a class="nav-link" href="../../tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>标签</span>
               </a>
@@ -163,7 +165,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="../../../about/" target="_self">
+              <a class="nav-link" href="../../about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
                 <span>关于</span>
               </a>
@@ -193,7 +195,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('../../../img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('../../assets/index_img/linux.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -278,7 +280,7 @@
                 <h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><h4 id="1-加入微盘"><a href="#1-加入微盘" class="headerlink" title="1. 加入微盘"></a>1. 加入微盘</h4><p>登录企业微信，收到邀请进入微盘，微盘-共享-视频事业部-运维组，这里是部门运维组整理的所有工作相关文件，可随时上传、下载、更新文件，方便小伙伴们跨平台、跨设备的实时处理工作内容与文件。</p>
 <h4 id="2-获取服务器远程信息"><a href="#2-获取服务器远程信息" class="headerlink" title="2. 获取服务器远程信息"></a>2. 获取服务器远程信息</h4><p>视频转码上云网关在河南的各个路公司处，将ssh服务端口映射到公网后方可ssh远程。</p>
 <p>远程信息已保存在微盘中：视频事业部-运维-河南-网关-河南网关远程信息表.xlsx。这里推荐使用<code>xshell</code>作为远程连接工具，可酌情保存一份远程配置文件在xshell上随时远程使用。</p>
-<p><img src="https://images.tttrove.top/file/5dec5d2e13ad57f41d49d.png" srcset="/img/loading.gif" lazyload alt="image-20240501142120086"></p>
+<p><img src="https://images.tttrove.top/file/5dec5d2e13ad57f41d49d.png" srcset="/assets/fluid/loading.gif" lazyload alt="image-20240501142120086"></p>
 <h4 id="3-获取运维的摄像机信息"><a href="#3-获取运维的摄像机信息" class="headerlink" title="3. 获取运维的摄像机信息"></a>3. 获取运维的摄像机信息</h4><p>微盘路径：视频事业部-运维-河南-网关-河南${高速公路公司}-${路公司}</p>
 <p>其中备份了各个路公司转码网关的已导入的摄像机信息、路由信息和网卡信息，建议另存为一份副本保存到本地，方便上云点位离线的排查工作。</p>
 <h3 id="1-主控程序"><a href="#1-主控程序" class="headerlink" title="1. 主控程序"></a>1. 主控程序</h3><p>作用：为高速公路视频云联网平台提供对接服务，接受并处理在云平台上的标清下发推流请求和高清点播请求，将请求传递给转码程序处理</p>
@@ -384,7 +386,7 @@
     
       <span class="category-chain">
         
-  <a href="../../../categories/%E5%B7%A5%E4%BD%9C%E7%AC%94%E8%AE%B0/" class="category-chain-item">工作笔记</a>
+  <a href="../../categories/%E5%B7%A5%E4%BD%9C%E7%AC%94%E8%AE%B0/" class="category-chain-item">工作笔记</a>
   
   
 
@@ -399,7 +401,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="../../../tags/%E8%BF%90%E7%BB%B4/" class="print-no-link">#运维</a>
+        <a href="../../tags/%E8%BF%90%E7%BB%B4/" class="print-no-link">#运维</a>
       
     </div>
   
@@ -412,7 +414,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>河南视频网关运维之Linux篇</div>
-      <div>https://tttrove.top/blog/202404/河南视频网关运维之Linux篇/</div>
+      <div>https://tttrove.top/202404/河南视频网关运维之Linux篇/</div>
     </div>
     <div class="license-meta">
       
@@ -456,7 +458,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="../../../blog/202405/%E6%B2%B3%E5%8D%97%E8%A7%86%E9%A2%91%E7%BD%91%E5%85%B3%E8%BF%90%E7%BB%B4%E4%B9%8BWindows%E7%AF%87/" title="河南视频网关运维之Windows篇">
+                      <a href="../../202405/%E6%B2%B3%E5%8D%97%E8%A7%86%E9%A2%91%E7%BD%91%E5%85%B3%E8%BF%90%E7%BB%B4%E4%B9%8BWindows%E7%AF%87/" title="河南视频网关运维之Windows篇">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">河南视频网关运维之Windows篇</span>
                         <span class="visible-mobile">上一篇</span>
@@ -472,6 +474,38 @@
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://cdn.staticfile.org/waline/2.15.5/waline.min.css')
+      Fluid.utils.createScript('https://cdn.staticfile.org/waline/2.15.5/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://waline.tttrove.top","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>
@@ -590,8 +624,8 @@
 
 <script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="../../../js/events.js" ></script>
-<script  src="../../../js/plugins.js" ></script>
+<script  src="../../js/events.js" ></script>
+<script  src="../../js/plugins.js" ></script>
 
 
   <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
@@ -613,7 +647,7 @@
 
 
   
-    <script  src="../../../js/img-lazyload.js" ></script>
+    <script  src="../../js/img-lazyload.js" ></script>
   
 
 
@@ -712,7 +746,7 @@
 
   <script>Fluid.plugins.imageCaption();</script>
 
-  <script  src="../../../js/local-search.js" ></script>
+  <script  src="../../js/local-search.js" ></script>
 
 
 
@@ -720,7 +754,7 @@
 
 <!-- 主题的启动项，将它保持在最底部 -->
 <!-- the boot of the theme, keep it at the bottom -->
-<script  src="../../../js/boot.js" ></script>
+<script  src="../../js/boot.js" ></script>
 
 
   
